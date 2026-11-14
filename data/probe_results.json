@@ -1,0 +1,134 @@
+[
+  {
+    "source": "NASA CMR Collections API",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=NASADEM&page_size=1",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 0.99,
+    "auth_required": false,
+    "content_type": "application/json;charset=utf-8",
+    "notes": "Queries NASA Common Metadata Repository for NASADEM collections dynamically.",
+    "timestamp": "2026-11-13T19:53:08.551511+00:00"
+  },
+  {
+    "source": "NASA CMR-STAC Catalog",
+    "url": "https://cmr.earthdata.nasa.gov/stac",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 0.85,
+    "auth_required": false,
+    "content_type": "application/json; charset=utf-8",
+    "notes": "SpatioTemporal Asset Catalog endpoint for CMR datasets.",
+    "timestamp": "2026-11-13T19:53:09.404364+00:00"
+  },
+  {
+    "source": "NASA CMR ASTER GDEM Search",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=ASTGTM&version=003&page_size=1",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 0.95,
+    "auth_required": false,
+    "content_type": "application/json;charset=utf-8",
+    "notes": "ASTER Global Digital Elevation Model V003 collection search in CMR.",
+    "timestamp": "2026-11-13T19:53:10.357751+00:00"
+  },
+  {
+    "source": "NASA POWER Daily API",
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,PRECTOTCORR&community=RE&longitude=-13.5&latitude=29.0&start=20230101&end=20230105&format=JSON",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 1.48,
+    "auth_required": false,
+    "content_type": "application/json",
+    "notes": "Daily meteorological and solar climatology from NASA POWER for Lanzarote candidate site.",
+    "timestamp": "2026-11-13T19:53:11.833092+00:00"
+  },
+  {
+    "source": "NASA PDS API",
+    "url": "https://pds.nasa.gov/api/search/1/products?q=lroc&limit=1",
+    "status_code": 400,
+    "status_desc": "HTTP 400",
+    "latency_s": 2.25,
+    "auth_required": false,
+    "content_type": "application/json",
+    "notes": "NASA Planetary Data System Search API for metadata discovery.",
+    "timestamp": "2026-11-13T19:53:14.082743+00:00"
+  },
+  {
+    "source": "Washington University ODE REST API (Moon)",
+    "url": "https://oderest.rsl.wustl.edu/live2/?target=moon&query=product&pt=LOLA_EDR&output=JSON&limit=1",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 4.23,
+    "auth_required": false,
+    "content_type": "application/json; charset=utf-8",
+    "notes": "Orbital Data Explorer REST service for Moon LOLA data products.",
+    "timestamp": "2026-11-13T19:53:18.308938+00:00"
+  },
+  {
+    "source": "Washington University ODE REST API (Mars)",
+    "url": "https://oderest.rsl.wustl.edu/live2/?target=mars&query=product&pt=MOLA_MEGDR&output=JSON&limit=1",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 1.27,
+    "auth_required": false,
+    "content_type": "application/json; charset=utf-8",
+    "notes": "Orbital Data Explorer REST service for Mars MOLA topography datasets.",
+    "timestamp": "2026-11-13T19:53:19.577430+00:00"
+  },
+  {
+    "source": "NASA Moon Trek WMTS Capabilities",
+    "url": "https://trek.nasa.gov/tiles/Moon/EQ/LRO_LOLA_ClrShade_Global_128ppd_v04/1.0.0/WMTSCapabilities.xml",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 1.51,
+    "auth_required": false,
+    "content_type": "application/xml",
+    "notes": "NASA Moon Trek WMTS visual mosaic capabilities for LOLA Color Shaded relief.",
+    "timestamp": "2026-11-13T19:53:21.092424+00:00"
+  },
+  {
+    "source": "NASA Mars Trek WMTS Capabilities",
+    "url": "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MGS_MOLA_ClrShade_merge_global_463m/1.0.0/WMTSCapabilities.xml",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 1.77,
+    "auth_required": false,
+    "content_type": "application/xml",
+    "notes": "NASA Mars Trek WMTS visual mosaic capabilities for MOLA shaded relief.",
+    "timestamp": "2026-11-13T19:53:22.860112+00:00"
+  },
+  {
+    "source": "NASA HLS LP DAAC Endpoint",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=HLSL30&page_size=1",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 3.6,
+    "auth_required": false,
+    "content_type": "application/json;charset=utf-8",
+    "notes": "Harmonized Landsat Sentinel-2 (HLS L30) collection catalog search.",
+    "timestamp": "2026-11-13T19:53:26.464006+00:00"
+  },
+  {
+    "source": "NASA EMIT Mineral Identification (EMITL2BMIN)",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=EMITL2BMIN&page_size=1",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 2.85,
+    "auth_required": false,
+    "content_type": "application/json;charset=utf-8",
+    "notes": "Earth Surface Mineral Dust Source Investigation L2B mineral identification collection.",
+    "timestamp": "2026-11-13T19:53:29.310812+00:00"
+  },
+  {
+    "source": "USGS Astrogeology Unified Geologic Map of the Moon",
+    "url": "https://astrogeology.usgs.gov/search/map/Moon/Geology/Unified_Geologic_Map_of_the_Moon_GIS_v2/",
+    "status_code": 200,
+    "status_desc": "OK",
+    "latency_s": 2.32,
+    "auth_required": false,
+    "content_type": "text/html; charset=utf-8",
+    "notes": "USGS landing page / publication reference for Unified Geologic Map of the Moon.",
+    "timestamp": "2026-11-13T19:53:31.633322+00:00"
+  }
+]
