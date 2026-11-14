@@ -1,0 +1,336 @@
+{
+  "$defs": {
+    "Body": {
+      "description": "Cuerpo planetario donde se ADQUIRIÓ físicamente el dato.",
+      "enum": [
+        "earth",
+        "moon",
+        "mars"
+      ],
+      "title": "Body",
+      "type": "string"
+    },
+    "CapabilityItem": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/CapabilityStatus"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "details": {
+          "additionalProperties": true,
+          "title": "Details",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "evidence",
+        "details"
+      ],
+      "title": "CapabilityItem",
+      "type": "object"
+    },
+    "CapabilityStatus": {
+      "enum": [
+        "available",
+        "unavailable",
+        "declared",
+        "not_probed",
+        "disabled_by_policy",
+        "unknown"
+      ],
+      "title": "CapabilityStatus",
+      "type": "string"
+    },
+    "DeliveryMode": {
+      "description": "Vía por la que llegó el dato (eje 2 de procedencia).",
+      "enum": [
+        "live",
+        "replay",
+        "emulated_link"
+      ],
+      "title": "DeliveryMode",
+      "type": "string"
+    },
+    "EvidenceClass": {
+      "description": "Origen del dato (eje 1 de procedencia).",
+      "enum": [
+        "robot_measured",
+        "orbital_nasa",
+        "derived",
+        "synthetic_test"
+      ],
+      "title": "EvidenceClass",
+      "type": "string"
+    },
+    "RobotDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "robot_id": {
+          "title": "Robot Id",
+          "type": "string"
+        },
+        "platform": {
+          "default": "unitree_go2",
+          "title": "Platform",
+          "type": "string"
+        },
+        "body": {
+          "$ref": "#/$defs/Body",
+          "default": "earth"
+        },
+        "model_variant": {
+          "default": "unknown",
+          "enum": [
+            "AIR",
+            "PRO",
+            "EDU",
+            "unknown"
+          ],
+          "title": "Model Variant",
+          "type": "string"
+        },
+        "model_variant_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Model Variant Source",
+          "type": "string"
+        },
+        "firmware_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firmware Version"
+        },
+        "firmware_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Firmware Source",
+          "type": "string"
+        },
+        "adapter": {
+          "title": "Adapter",
+          "type": "string"
+        },
+        "delivery_mode": {
+          "$ref": "#/$defs/DeliveryMode"
+        }
+      },
+      "required": [
+        "robot_id",
+        "platform",
+        "body",
+        "model_variant",
+        "model_variant_source",
+        "firmware_version",
+        "firmware_source",
+        "adapter",
+        "delivery_mode"
+      ],
+      "title": "RobotDescriptor",
+      "type": "object"
+    },
+    "TopicObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "messages": {
+          "title": "Messages",
+          "type": "integer"
+        },
+        "first_seen_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Seen Utc"
+        },
+        "last_seen_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Seen Utc"
+        },
+        "rate_hz": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rate Hz"
+        },
+        "payload_structure": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Payload Structure",
+          "type": "object"
+        }
+      },
+      "required": [
+        "topic",
+        "messages",
+        "first_seen_utc",
+        "last_seen_utc",
+        "rate_hz",
+        "payload_structure"
+      ],
+      "title": "TopicObservation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "terrainx.robot.capability_report/1.1-draft",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "report_id": {
+      "title": "Report Id",
+      "type": "string"
+    },
+    "created_utc": {
+      "format": "date-time",
+      "title": "Created Utc",
+      "type": "string"
+    },
+    "robot": {
+      "$ref": "#/$defs/RobotDescriptor"
+    },
+    "evidence_class": {
+      "$ref": "#/$defs/EvidenceClass"
+    },
+    "overall_status": {
+      "enum": [
+        "ok",
+        "degraded",
+        "failed"
+      ],
+      "title": "Overall Status",
+      "type": "string"
+    },
+    "observation_window_s": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Observation Window S"
+    },
+    "connection": {
+      "additionalProperties": true,
+      "title": "Connection",
+      "type": "object"
+    },
+    "network_preflight": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Network Preflight"
+    },
+    "capabilities": {
+      "items": {
+        "$ref": "#/$defs/CapabilityItem"
+      },
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "topics": {
+      "items": {
+        "$ref": "#/$defs/TopicObservation"
+      },
+      "title": "Topics",
+      "type": "array"
+    },
+    "software": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Software",
+      "type": "object"
+    },
+    "caveats": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "report_id",
+    "created_utc",
+    "robot",
+    "evidence_class",
+    "overall_status",
+    "observation_window_s",
+    "connection",
+    "network_preflight",
+    "capabilities",
+    "topics",
+    "software",
+    "caveats"
+  ],
+  "title": "CapabilityReport",
+  "type": "object"
+}

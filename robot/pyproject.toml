@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terrainx-robot"
+version = "0.1.0"
+description = "TERRAIN-X - modulo de robotica. Fase 1: adquisicion de solo lectura del Unitree Go2 (LiDAR + telemetria), PLY + metadatos y modo replay offline."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+# Nucleo: funciona offline, sin la pila WebRTC.
+dependencies = [
+    "numpy>=1.26",
+    "lz4>=4.3",
+    "pydantic>=2.6,<3",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+# Conexion real con el Go2. Version fijada: el codigo se ha verificado contra
+# el codigo fuente de esta version concreta (ver docs/NOTAS_LIBRERIA_GO2.md).
+go2 = ["unitree_webrtc_connect==2.2.0"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+terrainx-robot = "terrainx_robot.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+    "go2lib: requiere unitree_webrtc_connect instalado (se omite si no esta)",
+]

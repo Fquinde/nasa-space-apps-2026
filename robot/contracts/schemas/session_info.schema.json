@@ -1,0 +1,249 @@
+{
+  "$defs": {
+    "Body": {
+      "description": "Cuerpo planetario donde se ADQUIRIÓ físicamente el dato.",
+      "enum": [
+        "earth",
+        "moon",
+        "mars"
+      ],
+      "title": "Body",
+      "type": "string"
+    },
+    "DeliveryMode": {
+      "description": "Vía por la que llegó el dato (eje 2 de procedencia).",
+      "enum": [
+        "live",
+        "replay",
+        "emulated_link"
+      ],
+      "title": "DeliveryMode",
+      "type": "string"
+    },
+    "EvidenceClass": {
+      "description": "Origen del dato (eje 1 de procedencia).",
+      "enum": [
+        "robot_measured",
+        "orbital_nasa",
+        "derived",
+        "synthetic_test"
+      ],
+      "title": "EvidenceClass",
+      "type": "string"
+    },
+    "RobotDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "robot_id": {
+          "title": "Robot Id",
+          "type": "string"
+        },
+        "platform": {
+          "default": "unitree_go2",
+          "title": "Platform",
+          "type": "string"
+        },
+        "body": {
+          "$ref": "#/$defs/Body",
+          "default": "earth"
+        },
+        "model_variant": {
+          "default": "unknown",
+          "enum": [
+            "AIR",
+            "PRO",
+            "EDU",
+            "unknown"
+          ],
+          "title": "Model Variant",
+          "type": "string"
+        },
+        "model_variant_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Model Variant Source",
+          "type": "string"
+        },
+        "firmware_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firmware Version"
+        },
+        "firmware_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Firmware Source",
+          "type": "string"
+        },
+        "adapter": {
+          "title": "Adapter",
+          "type": "string"
+        },
+        "delivery_mode": {
+          "$ref": "#/$defs/DeliveryMode"
+        }
+      },
+      "required": [
+        "robot_id",
+        "platform",
+        "body",
+        "model_variant",
+        "model_variant_source",
+        "firmware_version",
+        "firmware_source",
+        "adapter",
+        "delivery_mode"
+      ],
+      "title": "RobotDescriptor",
+      "type": "object"
+    },
+    "ScanContext": {
+      "description": "Contexto de la adquisición (dossier §6.2: 'controlled_test').",
+      "enum": [
+        "controlled_test",
+        "field_campaign",
+        "synthetic"
+      ],
+      "title": "ScanContext",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "terrainx.robot.session/1.1-draft",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "session_id": {
+      "title": "Session Id",
+      "type": "string"
+    },
+    "created_utc": {
+      "format": "date-time",
+      "title": "Created Utc",
+      "type": "string"
+    },
+    "closed_utc": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Closed Utc"
+    },
+    "robot": {
+      "$ref": "#/$defs/RobotDescriptor"
+    },
+    "evidence_class": {
+      "$ref": "#/$defs/EvidenceClass"
+    },
+    "scan_context": {
+      "$ref": "#/$defs/ScanContext"
+    },
+    "demo": {
+      "title": "Demo",
+      "type": "boolean"
+    },
+    "generator": {
+      "title": "Generator",
+      "type": "string"
+    },
+    "software": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Software",
+      "type": "object"
+    },
+    "record_count": {
+      "default": 0,
+      "title": "Record Count",
+      "type": "integer"
+    },
+    "lidar_records": {
+      "default": 0,
+      "title": "Lidar Records",
+      "type": "integer"
+    },
+    "json_records": {
+      "default": 0,
+      "title": "Json Records",
+      "type": "integer"
+    },
+    "messages_file": {
+      "default": "messages.jsonl",
+      "title": "Messages File",
+      "type": "string"
+    },
+    "messages_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Messages Sha256"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "schema_version",
+    "session_id",
+    "created_utc",
+    "closed_utc",
+    "robot",
+    "evidence_class",
+    "scan_context",
+    "demo",
+    "generator",
+    "software",
+    "record_count",
+    "lidar_records",
+    "json_records",
+    "messages_file",
+    "messages_sha256",
+    "notes"
+  ],
+  "title": "SessionInfo",
+  "type": "object"
+}

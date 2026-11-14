@@ -1,0 +1,179 @@
+{
+  "schema_version": "terrainx.robot.capability_report/1.1-draft",
+  "report_id": "probe-20261114T132716Z-d0fb51",
+  "created_utc": "2026-11-14T13:27:16.780911Z",
+  "robot": {
+    "robot_id": "synthetic-go2-like",
+    "platform": "synthetic_generator",
+    "body": "earth",
+    "model_variant": "unknown",
+    "model_variant_source": "unknown",
+    "firmware_version": null,
+    "firmware_source": "unknown",
+    "adapter": "replay",
+    "delivery_mode": "replay"
+  },
+  "evidence_class": "synthetic_test",
+  "overall_status": "ok",
+  "observation_window_s": null,
+  "connection": {
+    "adapter": "replay",
+    "delivery_mode": "replay",
+    "connection_state_at_end_of_window": "ready_readonly",
+    "last_error": null,
+    "readonly_guard": {}
+  },
+  "network_preflight": null,
+  "capabilities": [
+    {
+      "name": "lidar_point_data",
+      "status": "available",
+      "evidence": "4 de 4 frames LiDAR decodificados",
+      "details": {
+        "topic": "rt/utlidar/voxel_map_compressed",
+        "rate_hz": 10.0,
+        "point_type": "voxel_occupancy",
+        "frame_id": "synthetic_frame",
+        "resolution": 0.05,
+        "width": [
+          128,
+          128,
+          38
+        ],
+        "src_size": 77824,
+        "last_point_count": 16077,
+        "extra_metadata_fields": [],
+        "units": "ASUMIDAS en metros (no declaradas): verificar físicamente"
+      }
+    },
+    {
+      "name": "lidar_raw_returns",
+      "status": "unknown",
+      "evidence": "Por WebRTC (librería 2.2.0) el LiDAR llega como mapa de vóxeles ocupados; no se ha observado una nube de retornos crudos por esta vía. Otras vías (p. ej. SDK oficial en modelos EDU) no se han evaluado.",
+      "details": {}
+    },
+    {
+      "name": "battery_soc",
+      "status": "available",
+      "evidence": "recibido bms_state.soc (lowstate)",
+      "details": {
+        "last_value": 88.0
+      }
+    },
+    {
+      "name": "imu_attitude",
+      "status": "available",
+      "evidence": "recibido imu_state (lowstate/sportmodestate)",
+      "details": {
+        "last_value": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "odometry_position",
+      "status": "unavailable",
+      "evidence": "no se recibió position (sportmodestate)",
+      "details": {}
+    },
+    {
+      "name": "robot_pose_topic",
+      "status": "unavailable",
+      "evidence": "ningún mensaje en rt/utlidar/robot_pose en toda la fuente reproducida (pose/odometría estimada por el robot)",
+      "details": {
+        "topic": "rt/utlidar/robot_pose"
+      }
+    },
+    {
+      "name": "lidar_state_topic",
+      "status": "unavailable",
+      "evidence": "ningún mensaje en rt/utlidar/lidar_state en toda la fuente reproducida (estado del LiDAR)",
+      "details": {
+        "topic": "rt/utlidar/lidar_state"
+      }
+    },
+    {
+      "name": "config_state_topic",
+      "status": "unavailable",
+      "evidence": "ningún mensaje en rt/multiplestate en toda la fuente reproducida (configuración (altura, velocidad, evitación de obstáculos))",
+      "details": {
+        "topic": "rt/multiplestate"
+      }
+    },
+    {
+      "name": "video_stream",
+      "status": "not_probed",
+      "evidence": "la librería ofrece vídeo, pero queda fuera del alcance de Fase 1",
+      "details": {}
+    },
+    {
+      "name": "motion_control",
+      "status": "disabled_by_policy",
+      "evidence": "Fase 1 es de solo lectura: el guardián bloquea toda orden de movimiento",
+      "details": {}
+    },
+    {
+      "name": "model_variant",
+      "status": "unknown",
+      "evidence": "no declarado",
+      "details": {
+        "value": "unknown"
+      }
+    },
+    {
+      "name": "firmware_version",
+      "status": "unknown",
+      "evidence": "no declarado",
+      "details": {
+        "value": null
+      }
+    }
+  ],
+  "topics": [
+    {
+      "topic": "rt/lf/lowstate",
+      "messages": 2,
+      "first_seen_utc": "2026-11-14T13:27:12.109303Z",
+      "last_seen_utc": "2026-11-14T13:27:12.309303Z",
+      "rate_hz": 5.0,
+      "payload_structure": {
+        "_synthetic": "bool",
+        "imu_state.rpy": "list[3]",
+        "bms_state.soc": "int",
+        "power_v": "float"
+      }
+    },
+    {
+      "topic": "rt/utlidar/voxel_map_compressed",
+      "messages": 4,
+      "first_seen_utc": "2026-11-14T13:27:12.059303Z",
+      "last_seen_utc": "2026-11-14T13:27:12.359303Z",
+      "rate_hz": 10.0,
+      "payload_structure": {
+        "stamp": "float",
+        "frame_id": "str",
+        "resolution": "float",
+        "src_size": "int",
+        "origin": "list[3]",
+        "width": "list[3]"
+      }
+    }
+  ],
+  "software": {
+    "terrainx_robot": "0.1.0",
+    "python": "3.13.7",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "numpy": "2.5.4",
+    "lz4": "4.4.5",
+    "pydantic": "2.14.3",
+    "unitree_webrtc_connect": "2.2.0"
+  },
+  "caveats": [
+    "FUENTE SINTÉTICA: las capacidades son simuladas, no del robot.",
+    "Informe en modo REPLAY: describe la fuente grabada, no un robot conectado.",
+    "'available' significa que el dato se OBSERVÓ durante la ventana; sus unidades y ejes siguen sin verificar físicamente.",
+    "Modelo y firmware no se obtienen por las vías usadas en Fase 1: solo constan si el operador los declara."
+  ]
+}

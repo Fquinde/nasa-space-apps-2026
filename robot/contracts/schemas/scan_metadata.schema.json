@@ -1,0 +1,648 @@
+{
+  "$defs": {
+    "Body": {
+      "description": "Cuerpo planetario donde se ADQUIRIÓ físicamente el dato.",
+      "enum": [
+        "earth",
+        "moon",
+        "mars"
+      ],
+      "title": "Body",
+      "type": "string"
+    },
+    "CaptureInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "start_utc": {
+          "format": "date-time",
+          "title": "Start Utc",
+          "type": "string"
+        },
+        "end_utc": {
+          "format": "date-time",
+          "title": "End Utc",
+          "type": "string"
+        },
+        "duration_s": {
+          "title": "Duration S",
+          "type": "number"
+        },
+        "acquisition_first_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acquisition First Utc"
+        },
+        "acquisition_last_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acquisition Last Utc"
+        },
+        "mode": {
+          "enum": [
+            "accumulate",
+            "last",
+            "single_file"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "topic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Topic"
+        },
+        "frames_received": {
+          "title": "Frames Received",
+          "type": "integer"
+        },
+        "frames_used": {
+          "title": "Frames Used",
+          "type": "integer"
+        },
+        "frames_rejected": {
+          "title": "Frames Rejected",
+          "type": "integer"
+        },
+        "rejection_reasons": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Rejection Reasons",
+          "type": "object"
+        },
+        "robot_stamp_first_raw": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Robot Stamp First Raw"
+        },
+        "robot_stamp_last_raw": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Robot Stamp Last Raw"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        }
+      },
+      "required": [
+        "start_utc",
+        "end_utc",
+        "duration_s",
+        "acquisition_first_utc",
+        "acquisition_last_utc",
+        "mode",
+        "topic",
+        "frames_received",
+        "frames_used",
+        "frames_rejected",
+        "rejection_reasons",
+        "robot_stamp_first_raw",
+        "robot_stamp_last_raw",
+        "session_id"
+      ],
+      "title": "CaptureInfo",
+      "type": "object"
+    },
+    "DeliveryMode": {
+      "description": "Vía por la que llegó el dato (eje 2 de procedencia).",
+      "enum": [
+        "live",
+        "replay",
+        "emulated_link"
+      ],
+      "title": "DeliveryMode",
+      "type": "string"
+    },
+    "EvidenceClass": {
+      "description": "Origen del dato (eje 1 de procedencia).",
+      "enum": [
+        "robot_measured",
+        "orbital_nasa",
+        "derived",
+        "synthetic_test"
+      ],
+      "title": "EvidenceClass",
+      "type": "string"
+    },
+    "FileRef": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "bytes": {
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "format": {
+          "title": "Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "format"
+      ],
+      "title": "FileRef",
+      "type": "object"
+    },
+    "GeometryInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "point_type": {
+          "$ref": "#/$defs/PointType"
+        },
+        "voxel_resolution_m": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voxel Resolution M"
+        },
+        "coordinate_rule": {
+          "title": "Coordinate Rule",
+          "type": "string"
+        },
+        "bounds_min": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bounds Min"
+        },
+        "bounds_max": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bounds Max"
+        },
+        "units_verification": {
+          "$ref": "#/$defs/Verification",
+          "default": "unverified"
+        },
+        "axes_verification": {
+          "$ref": "#/$defs/Verification",
+          "default": "unverified"
+        },
+        "axes_note": {
+          "title": "Axes Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "point_type",
+        "voxel_resolution_m",
+        "coordinate_rule",
+        "bounds_min",
+        "bounds_max",
+        "units_verification",
+        "axes_verification",
+        "axes_note"
+      ],
+      "title": "GeometryInfo",
+      "type": "object"
+    },
+    "PointType": {
+      "description": "Qué representa cada punto de la nube.",
+      "enum": [
+        "voxel_occupancy",
+        "raw_returns",
+        "unknown"
+      ],
+      "title": "PointType",
+      "type": "string"
+    },
+    "ProcessingInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "title": "Decoder",
+          "type": "string"
+        },
+        "validation": {
+          "additionalProperties": true,
+          "title": "Validation",
+          "type": "object"
+        },
+        "deduplication": {
+          "additionalProperties": true,
+          "title": "Deduplication",
+          "type": "object"
+        },
+        "filters_applied": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Filters Applied",
+          "type": "array"
+        },
+        "ply_encoding": {
+          "title": "Ply Encoding",
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder",
+        "validation",
+        "deduplication",
+        "filters_applied",
+        "ply_encoding"
+      ],
+      "title": "ProcessingInfo",
+      "type": "object"
+    },
+    "RegistrationStub": {
+      "additionalProperties": false,
+      "description": "Registro espacial (dossier §6.2). En Fase 1 siempre 'local_only'.",
+      "properties": {
+        "status": {
+          "const": "local_only",
+          "default": "local_only",
+          "title": "Status",
+          "type": "string"
+        },
+        "method": {
+          "const": "none",
+          "default": "none",
+          "title": "Method",
+          "type": "string"
+        },
+        "target_frame": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Frame"
+        },
+        "transform_4x4": {
+          "anyOf": [
+            {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Transform 4X4"
+        },
+        "rmse_m": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rmse M"
+        }
+      },
+      "required": [
+        "status",
+        "method",
+        "target_frame",
+        "transform_4x4",
+        "rmse_m"
+      ],
+      "title": "RegistrationStub",
+      "type": "object"
+    },
+    "RobotDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "robot_id": {
+          "title": "Robot Id",
+          "type": "string"
+        },
+        "platform": {
+          "default": "unitree_go2",
+          "title": "Platform",
+          "type": "string"
+        },
+        "body": {
+          "$ref": "#/$defs/Body",
+          "default": "earth"
+        },
+        "model_variant": {
+          "default": "unknown",
+          "enum": [
+            "AIR",
+            "PRO",
+            "EDU",
+            "unknown"
+          ],
+          "title": "Model Variant",
+          "type": "string"
+        },
+        "model_variant_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Model Variant Source",
+          "type": "string"
+        },
+        "firmware_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firmware Version"
+        },
+        "firmware_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Firmware Source",
+          "type": "string"
+        },
+        "adapter": {
+          "title": "Adapter",
+          "type": "string"
+        },
+        "delivery_mode": {
+          "$ref": "#/$defs/DeliveryMode"
+        }
+      },
+      "required": [
+        "robot_id",
+        "platform",
+        "body",
+        "model_variant",
+        "model_variant_source",
+        "firmware_version",
+        "firmware_source",
+        "adapter",
+        "delivery_mode"
+      ],
+      "title": "RobotDescriptor",
+      "type": "object"
+    },
+    "ScanContext": {
+      "description": "Contexto de la adquisición (dossier §6.2: 'controlled_test').",
+      "enum": [
+        "controlled_test",
+        "field_campaign",
+        "synthetic"
+      ],
+      "title": "ScanContext",
+      "type": "string"
+    },
+    "Verification": {
+      "enum": [
+        "unverified",
+        "verified"
+      ],
+      "title": "Verification",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "terrainx.robot.scan/1.1-draft",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "scan_context": {
+      "$ref": "#/$defs/ScanContext"
+    },
+    "frame_id": {
+      "title": "Frame Id",
+      "type": "string"
+    },
+    "unit": {
+      "const": "m",
+      "default": "m",
+      "title": "Unit",
+      "type": "string"
+    },
+    "timestamp_utc": {
+      "format": "date-time",
+      "title": "Timestamp Utc",
+      "type": "string"
+    },
+    "point_count": {
+      "title": "Point Count",
+      "type": "integer"
+    },
+    "file_url": {
+      "title": "File Url",
+      "type": "string"
+    },
+    "pose_source": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pose Source"
+    },
+    "source_record_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Record Id"
+    },
+    "registration": {
+      "$ref": "#/$defs/RegistrationStub"
+    },
+    "robot": {
+      "$ref": "#/$defs/RobotDescriptor"
+    },
+    "body": {
+      "$ref": "#/$defs/Body"
+    },
+    "evidence_class": {
+      "$ref": "#/$defs/EvidenceClass"
+    },
+    "delivery_mode": {
+      "$ref": "#/$defs/DeliveryMode"
+    },
+    "demo": {
+      "title": "Demo",
+      "type": "boolean"
+    },
+    "capture": {
+      "$ref": "#/$defs/CaptureInfo"
+    },
+    "geometry": {
+      "$ref": "#/$defs/GeometryInfo"
+    },
+    "processing": {
+      "$ref": "#/$defs/ProcessingInfo"
+    },
+    "files": {
+      "additionalProperties": {
+        "$ref": "#/$defs/FileRef"
+      },
+      "title": "Files",
+      "type": "object"
+    },
+    "provenance": {
+      "additionalProperties": true,
+      "title": "Provenance",
+      "type": "object"
+    },
+    "quality_flag": {
+      "title": "Quality Flag",
+      "type": "string"
+    },
+    "caveats": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "scan_context",
+    "frame_id",
+    "unit",
+    "timestamp_utc",
+    "point_count",
+    "file_url",
+    "pose_source",
+    "source_record_id",
+    "registration",
+    "robot",
+    "body",
+    "evidence_class",
+    "delivery_mode",
+    "demo",
+    "capture",
+    "geometry",
+    "processing",
+    "files",
+    "provenance",
+    "quality_flag",
+    "caveats"
+  ],
+  "title": "ScanMetadata",
+  "type": "object"
+}

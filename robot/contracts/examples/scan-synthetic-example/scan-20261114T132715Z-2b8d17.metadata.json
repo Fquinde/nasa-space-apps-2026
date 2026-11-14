@@ -1,0 +1,120 @@
+{
+  "schema_version": "terrainx.robot.scan/1.1-draft",
+  "id": "scan-20261114T132715Z-2b8d17",
+  "scan_context": "synthetic",
+  "frame_id": "synthetic_frame",
+  "unit": "m",
+  "timestamp_utc": "2026-11-14T13:27:12.059303Z",
+  "point_count": 18800,
+  "file_url": "scans/scan-20261114T132715Z-2b8d17/scan-20261114T132715Z-2b8d17.ply",
+  "pose_source": null,
+  "source_record_id": null,
+  "registration": {
+    "status": "local_only",
+    "method": "none",
+    "target_frame": null,
+    "transform_4x4": null,
+    "rmse_m": null
+  },
+  "robot": {
+    "robot_id": "synthetic-go2-like",
+    "platform": "synthetic_generator",
+    "body": "earth",
+    "model_variant": "unknown",
+    "model_variant_source": "unknown",
+    "firmware_version": null,
+    "firmware_source": "unknown",
+    "adapter": "replay",
+    "delivery_mode": "replay"
+  },
+  "body": "earth",
+  "evidence_class": "synthetic_test",
+  "delivery_mode": "replay",
+  "demo": true,
+  "capture": {
+    "start_utc": "2026-11-14T13:27:15.309990Z",
+    "end_utc": "2026-11-14T13:27:15.320672Z",
+    "duration_s": 0.010682,
+    "acquisition_first_utc": "2026-11-14T13:27:12.059303Z",
+    "acquisition_last_utc": "2026-11-14T13:27:12.359303Z",
+    "mode": "accumulate",
+    "topic": "rt/utlidar/voxel_map_compressed",
+    "frames_received": 4,
+    "frames_used": 4,
+    "frames_rejected": 0,
+    "rejection_reasons": {},
+    "robot_stamp_first_raw": 0.0,
+    "robot_stamp_last_raw": 0.3,
+    "session_id": "session-synthetic-20261114T132711Z-55c546"
+  },
+  "geometry": {
+    "point_type": "voxel_occupancy",
+    "voxel_resolution_m": 0.05,
+    "coordinate_rule": "punto = origin + índice_vóxel * resolution (fórmula del decodificador; no documentado si el punto es esquina o centro del vóxel)",
+    "bounds_min": [
+      -3.2,
+      -3.2,
+      0.0
+    ],
+    "bounds_max": [
+      3.15,
+      3.15,
+      1.2
+    ],
+    "units_verification": "unverified",
+    "axes_verification": "unverified",
+    "axes_note": "frame_id declarado por la fuente: 'synthetic_frame'"
+  },
+  "processing": {
+    "decoder": "terrainx.voxel_codec (réplica de unitree_webrtc_connect native 2.2.0)",
+    "validation": {
+      "non_finite_removed": 0,
+      "out_of_bounds_removed": 0,
+      "max_abs_coord_m": 1000.0
+    },
+    "deduplication": {
+      "rule": "un punto por celda de 0.05 m (round(p / resolution)); se conserva la primera aparición",
+      "removed": 45064,
+      "points_before": 63864
+    },
+    "filters_applied": [],
+    "ply_encoding": "binary_little_endian float32"
+  },
+  "files": {
+    "ply": {
+      "path": "scan-20261114T132715Z-2b8d17.ply",
+      "sha256": "39d88145a9d20f1141a0185b2eda14a0580d3604d6c15842b53068543b21530d",
+      "bytes": 225963,
+      "format": "PLY binary_little_endian float32"
+    }
+  },
+  "provenance": {
+    "software": {
+      "terrainx_robot": "0.1.0",
+      "python": "3.13.7",
+      "platform": "Windows-11-10.0.26300-SP0",
+      "numpy": "2.5.4",
+      "lz4": "4.4.5",
+      "pydantic": "2.14.3",
+      "unitree_webrtc_connect": "2.2.0"
+    },
+    "adapter": "replay",
+    "session_id": "session-synthetic-20261114T132711Z-55c546",
+    "replay_source": {
+      "type": "session",
+      "session_id": "session-synthetic-20261114T132711Z-55c546",
+      "messages_sha256": "15769f384e931055e526e6863a43da64ce7aa5cbad5de11bae2c0830cd3fa886",
+      "generator": "terrainx_robot.fixtures.synthetic"
+    }
+  },
+  "quality_flag": "synthetic_test_data",
+  "caveats": [
+    "DATOS SINTÉTICOS generados por software para pruebas: no representan ninguna medición física.",
+    "Cada punto es un vóxel ocupado (celda de 0.05 m) con el FORMATO del mapa que publica el robot por WebRTC (generado por software); no son retornos crudos del LiDAR. Error de cuantización de hasta una celda.",
+    "Unidad 'm' ASUMIDA: ni el robot ni la librería declaran unidades. Pendiente de verificación física (docs/VERIFICACION_FISICA.md).",
+    "Convención de ejes del frame 'synthetic_frame' no verificada (orientación de X/Y/Z y origen pendientes de comprobar con el robot).",
+    "Sin pose asociada: la nube está en el frame del robot, no georreferenciada (registration.status = local_only).",
+    "Unión de 4 mapas sucesivos: si el robot se desplazó, la coherencia depende de su estimación interna de posición (no verificada).",
+    "Entregado en modo replay (sesión de origen: session-synthetic-20261114T132711Z-55c546)."
+  ]
+}

@@ -1,0 +1,441 @@
+{
+  "$defs": {
+    "Body": {
+      "description": "Cuerpo planetario donde se ADQUIRIÓ físicamente el dato.",
+      "enum": [
+        "earth",
+        "moon",
+        "mars"
+      ],
+      "title": "Body",
+      "type": "string"
+    },
+    "CaptureState": {
+      "description": "Estado de la captura. Valores tomados del dossier §6.4 (+ 'idle').",
+      "enum": [
+        "idle",
+        "capturing",
+        "processing",
+        "complete",
+        "failed"
+      ],
+      "title": "CaptureState",
+      "type": "string"
+    },
+    "ConnectionState": {
+      "description": "Estado de la conexión. Valores tomados del dossier §6.4.",
+      "enum": [
+        "disconnected",
+        "connecting",
+        "ready_readonly",
+        "degraded",
+        "failed"
+      ],
+      "title": "ConnectionState",
+      "type": "string"
+    },
+    "DeliveryMode": {
+      "description": "Vía por la que llegó el dato (eje 2 de procedencia).",
+      "enum": [
+        "live",
+        "replay",
+        "emulated_link"
+      ],
+      "title": "DeliveryMode",
+      "type": "string"
+    },
+    "EvidenceClass": {
+      "description": "Origen del dato (eje 1 de procedencia).",
+      "enum": [
+        "robot_measured",
+        "orbital_nasa",
+        "derived",
+        "synthetic_test"
+      ],
+      "title": "EvidenceClass",
+      "type": "string"
+    },
+    "RobotDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "robot_id": {
+          "title": "Robot Id",
+          "type": "string"
+        },
+        "platform": {
+          "default": "unitree_go2",
+          "title": "Platform",
+          "type": "string"
+        },
+        "body": {
+          "$ref": "#/$defs/Body",
+          "default": "earth"
+        },
+        "model_variant": {
+          "default": "unknown",
+          "enum": [
+            "AIR",
+            "PRO",
+            "EDU",
+            "unknown"
+          ],
+          "title": "Model Variant",
+          "type": "string"
+        },
+        "model_variant_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Model Variant Source",
+          "type": "string"
+        },
+        "firmware_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firmware Version"
+        },
+        "firmware_source": {
+          "default": "unknown",
+          "enum": [
+            "declared_by_operator",
+            "unknown"
+          ],
+          "title": "Firmware Source",
+          "type": "string"
+        },
+        "adapter": {
+          "title": "Adapter",
+          "type": "string"
+        },
+        "delivery_mode": {
+          "$ref": "#/$defs/DeliveryMode"
+        }
+      },
+      "required": [
+        "robot_id",
+        "platform",
+        "body",
+        "model_variant",
+        "model_variant_source",
+        "firmware_version",
+        "firmware_source",
+        "adapter",
+        "delivery_mode"
+      ],
+      "title": "RobotDescriptor",
+      "type": "object"
+    },
+    "TelemetrySnapshot": {
+      "additionalProperties": false,
+      "description": "Telemetría resumida. Un valor ausente es None, NUNCA 0.",
+      "properties": {
+        "battery_soc_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Battery Soc Pct"
+        },
+        "power_v": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Power V"
+        },
+        "imu_rpy_raw": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Imu Rpy Raw"
+        },
+        "imu_quaternion_raw": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Imu Quaternion Raw"
+        },
+        "position_raw": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Position Raw"
+        },
+        "velocity_raw": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Velocity Raw"
+        },
+        "body_height_m": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body Height M"
+        },
+        "source_topics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Topics",
+          "type": "array"
+        },
+        "updated_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated Utc"
+        },
+        "units_note": {
+          "default": "Nombres de campo tomados de los ejemplos oficiales de unitree_webrtc_connect (lowstate, sportmodestate). Las unidades de los campos *_raw no están documentadas: pendiente de verificación física.",
+          "title": "Units Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "battery_soc_pct",
+        "power_v",
+        "imu_rpy_raw",
+        "imu_quaternion_raw",
+        "position_raw",
+        "velocity_raw",
+        "body_height_m",
+        "source_topics",
+        "updated_utc",
+        "units_note"
+      ],
+      "title": "TelemetrySnapshot",
+      "type": "object"
+    },
+    "TopicObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "messages": {
+          "title": "Messages",
+          "type": "integer"
+        },
+        "first_seen_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Seen Utc"
+        },
+        "last_seen_utc": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Seen Utc"
+        },
+        "rate_hz": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rate Hz"
+        },
+        "payload_structure": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Payload Structure",
+          "type": "object"
+        }
+      },
+      "required": [
+        "topic",
+        "messages",
+        "first_seen_utc",
+        "last_seen_utc",
+        "rate_hz",
+        "payload_structure"
+      ],
+      "title": "TopicObservation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "terrainx.robot.status/1.1-draft",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "robot": {
+      "$ref": "#/$defs/RobotDescriptor"
+    },
+    "connection_state": {
+      "$ref": "#/$defs/ConnectionState"
+    },
+    "capture_state": {
+      "$ref": "#/$defs/CaptureState"
+    },
+    "read_only": {
+      "default": true,
+      "title": "Read Only",
+      "type": "boolean"
+    },
+    "evidence_class": {
+      "$ref": "#/$defs/EvidenceClass"
+    },
+    "last_error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Error"
+    },
+    "lidar_frames_received": {
+      "default": 0,
+      "title": "Lidar Frames Received",
+      "type": "integer"
+    },
+    "last_lidar_utc": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Lidar Utc"
+    },
+    "telemetry": {
+      "$ref": "#/$defs/TelemetrySnapshot"
+    },
+    "topics": {
+      "items": {
+        "$ref": "#/$defs/TopicObservation"
+      },
+      "title": "Topics",
+      "type": "array"
+    },
+    "readonly_guard": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Readonly Guard",
+      "type": "object"
+    },
+    "updated_utc": {
+      "format": "date-time",
+      "title": "Updated Utc",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "robot",
+    "connection_state",
+    "capture_state",
+    "read_only",
+    "evidence_class",
+    "last_error",
+    "lidar_frames_received",
+    "last_lidar_utc",
+    "telemetry",
+    "topics",
+    "readonly_guard",
+    "updated_utc"
+  ],
+  "title": "RobotStatus",
+  "type": "object"
+}
