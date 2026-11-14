@@ -4,7 +4,7 @@ Revisión del **código fuente instalado** (`.venv/Lib/site-packages/unitree_web
 
 La librería **no es de Unitree**: es un proyecto comunitario que reproduce el protocolo de la app oficial. Unitree no documenta este protocolo.
 
-`python -m terrainx_robot check-library` vuelve a comprobar automáticamente lo esencial de este documento.
+`python -m terrainx_robot check-library` vuelve a comprobar automáticamente lo esencial de este documento. 
 
 ## Conexión
 
