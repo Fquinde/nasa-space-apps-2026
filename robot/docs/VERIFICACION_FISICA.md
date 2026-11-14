@@ -7,7 +7,7 @@
 - cómo son los ejes y el origen del frame LiDAR;
 - qué ocurre si se corta la conexión.
 
-**Alcance.** Todo se hace en **solo lectura**: nuestro software no mueve el robot. Si el robot tiene que desplazarse, lo hace el operador con su mando oficial, nunca este software.   
+**Alcance.** Todo se hace en **solo lectura**: nuestro software no mueve el robot. Si el robot tiene que desplazarse, lo hace el operador con su mando oficial, nunca este software.    
 
 ## 0. Antes de empezar
 
